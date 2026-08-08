@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const fs = require('fs');
+const path = require('path');
 const { select } = require('@inquirer/prompts');
 
 async function main() {
@@ -31,6 +33,12 @@ async function main() {
   });
 
   console.log('Language:', language);
+
+  const projectPath = path.resolve(process.cwd(), projectName);
+
+  fs.mkdirSync(projectPath);
+
+  console.log(`\n✔ Created project: ${projectPath}`);
 }
 
 main();
