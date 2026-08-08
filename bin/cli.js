@@ -38,6 +38,25 @@ async function main() {
 
   fs.mkdirSync(projectPath);
 
+  const directories = [
+    'src',
+    'src/config',
+    'src/models',
+    'src/controllers',
+    'src/service',
+    'src/routes',
+    'src/serializer',
+    'src/validations',
+    'src/utils',
+    'src/seed',
+  ];
+
+  for (const directory of directories) {
+    const directoryPath = path.join(projectPath, directory);
+
+    fs.mkdirSync(directoryPath, { recursive: true });
+  }
+
   console.log(`\n✔ Created project: ${projectPath}`);
 }
 
