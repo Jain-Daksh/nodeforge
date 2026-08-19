@@ -58,31 +58,67 @@ async function main() {
 
   console.log('Language:', language);
 
+  let templatePath;
+
+  if (language === 'javascript') {
+    const moduleSystem = await select({
+      message: 'Select module system:',
+      choices: [
+        {
+          name: 'CommonJS',
+          value: 'commonjs',
+        },
+        {
+          name: 'ES Modules',
+          value: 'module',
+        },
+      ],
+    });
+
+    console.log('Module system:', moduleSystem);
+
+    templatePath = path.join(
+      __dirname,
+      '..',
+      'templates',
+      'javascript',
+      moduleSystem,
+    );
+  } else {
+    templatePath = path.join(__dirname, '..', 'templates', language);
+  }
+
   const projectPath = path.resolve(process.cwd(), projectName);
+
+  if (fs.existsSync(projectPath)) {
+    console.error(`\n✖ Directory already exists: ${projectPath}`);
+    process.exit(1);
+  }
 
   fs.mkdirSync(projectPath);
 
-  const templatePath = path.join(__dirname, '..', 'templates', language);
-
   copyDirectory(templatePath, projectPath, projectName);
+
   console.log('\nInstalling dependencies...\n');
 
   execSync('npm install', {
     cwd: projectPath,
     stdio: 'inherit',
   });
+
   console.log(`
 ✔ Project created successfully!
 
   Project: ${projectName}
-  Language: ${language}
+  Language: ${language}${language === 'javascript' ? `\n  Module system: ${moduleSystem}` : ''}
 
 Next steps:
 
   cd ${projectName}
   npm run dev
 `);
-  console.log(`\n✔ Created project: ${projectPath}`);
+
+  console.log(`✔ Created project: ${projectPath}`);
 }
 
 main();
