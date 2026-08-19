@@ -155,8 +155,8 @@ async function main() {
       'database',
       database,
     );
+    copyDirectory(databaseTemplatePath, projectPath, projectName);
   }
-  copyDirectory(databaseTemplatePath, projectPath, projectName);
   // -------------------------
   // Install Dependencies
   // -------------------------
