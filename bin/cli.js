@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { select } = require('@inquirer/prompts');
+const { execSync } = require('child_process');
 
 function copyDirectory(source, destination, projectName) {
   fs.mkdirSync(destination, { recursive: true });
@@ -64,6 +65,23 @@ async function main() {
   const templatePath = path.join(__dirname, '..', 'templates', language);
 
   copyDirectory(templatePath, projectPath, projectName);
+  console.log('\nInstalling dependencies...\n');
+
+  execSync('npm install', {
+    cwd: projectPath,
+    stdio: 'inherit',
+  });
+  console.log(`
+✔ Project created successfully!
+
+  Project: ${projectName}
+  Language: ${language}
+
+Next steps:
+
+  cd ${projectName}
+  npm run dev
+`);
   console.log(`\n✔ Created project: ${projectPath}`);
 }
 
