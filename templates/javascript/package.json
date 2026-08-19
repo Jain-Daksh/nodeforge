@@ -16,5 +16,8 @@
     "@inquirer/prompts": "^8.5.2",
     "express": "^5.2.1",
     "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6"
   }
 }
