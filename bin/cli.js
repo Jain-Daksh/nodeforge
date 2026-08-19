@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { select } = require('@inquirer/prompts');
 
-function copyDirectory(source, destination) {
+function copyDirectory(source, destination, projectName) {
   fs.mkdirSync(destination, { recursive: true });
 
   const entries = fs.readdirSync(source, {
@@ -16,9 +16,13 @@ function copyDirectory(source, destination) {
     const destinationPath = path.join(destination, entry.name);
 
     if (entry.isDirectory()) {
-      copyDirectory(sourcePath, destinationPath);
+      copyDirectory(sourcePath, destinationPath, projectName);
     } else {
-      fs.copyFileSync(sourcePath, destinationPath);
+      let content = fs.readFileSync(sourcePath, 'utf8');
+
+      content = content.replace(/\{\{PROJECT_NAME\}\}/g, projectName);
+
+      fs.writeFileSync(destinationPath, content);
     }
   }
 }
@@ -59,8 +63,7 @@ async function main() {
 
   const templatePath = path.join(__dirname, '..', 'templates', language);
 
-  copyDirectory(templatePath, projectPath);
-
+  copyDirectory(templatePath, projectPath, projectName);
   console.log(`\n✔ Created project: ${projectPath}`);
 }
 
