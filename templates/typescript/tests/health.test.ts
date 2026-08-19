@@ -9,7 +9,7 @@
 
       expect(response.body).toEqual({
         success: true,
-        message: 'Server is running',
+        message: 'Hello World API is working',
       });
     });
   });
