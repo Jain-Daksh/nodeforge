@@ -90,25 +90,25 @@ async function main() {
   // Database
   // -------------------------
 
-  const database = await select({
-    message: 'Select database setup:',
-    choices: [
-      {
-        name: 'Sequelize ORM',
-        value: 'sequelize',
-      },
-      {
-        name: 'PostgreSQL',
-        value: 'postgres',
-      },
-      {
-        name: 'No Database',
-        value: 'none',
-      },
-    ],
-  });
+  // const database = await select({
+  //   message: 'Select database setup:',
+  //   choices: [
+  //     {
+  //       name: 'Sequelize ORM',
+  //       value: 'sequelize',
+  //     },
+  //     {
+  //       name: 'PostgreSQL',
+  //       value: 'postgres',
+  //     },
+  //     {
+  //       name: 'No Database',
+  //       value: 'none',
+  //     },
+  //   ],
+  // });
 
-  console.log('Database:', database);
+  // console.log('Database:', database);
 
   // -------------------------
   // Template
@@ -147,16 +147,16 @@ async function main() {
   // -------------------------
   copyDirectory(templatePath, projectPath, projectName);
 
-  if (database !== 'none') {
-    const databaseTemplatePath = path.join(
-      __dirname,
-      '..',
-      'templates',
-      'database',
-      database,
-    );
-    copyDirectory(databaseTemplatePath, projectPath, projectName);
-  }
+  // if (database !== 'none') {
+  //   const databaseTemplatePath = path.join(
+  //     __dirname,
+  //     '..',
+  //     'templates',
+  //     'database',
+  //     database,
+  //   );
+  //   copyDirectory(databaseTemplatePath, projectPath, projectName);
+  // }
   // -------------------------
   // Install Dependencies
   // -------------------------
@@ -177,7 +177,6 @@ async function main() {
 
   Project: ${projectName}
   Language: ${language}${language === 'javascript' ? `\n  Module system: ${moduleSystem}` : ''}
-  Database: ${database}
 
 Next steps:
 
