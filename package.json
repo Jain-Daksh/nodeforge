@@ -1,5 +1,5 @@
 {
-  "name": "nodeforge-cli",
+  "name": "@jain_daksh/nodecli",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
