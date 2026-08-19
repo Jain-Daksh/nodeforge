@@ -1,8 +1,7 @@
-const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-
-const router = require("./routes");
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const router = require('./routes');
 
 dotenv.config();
 
@@ -10,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "*",
+    origin: process.env.FRONTEND_URL || '*',
     credentials: true,
   }),
 );
