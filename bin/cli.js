@@ -42,6 +42,10 @@ async function main() {
 
   console.log('Project name:', projectName);
 
+  // -------------------------
+  // Language
+  // -------------------------
+
   const language = await select({
     message: 'Select language:',
     choices: [
@@ -58,10 +62,14 @@ async function main() {
 
   console.log('Language:', language);
 
-  let templatePath;
+  // -------------------------
+  // Module System
+  // -------------------------
+
+  let moduleSystem = null;
 
   if (language === 'javascript') {
-    const moduleSystem = await select({
+    moduleSystem = await select({
       message: 'Select module system:',
       choices: [
         {
@@ -76,7 +84,39 @@ async function main() {
     });
 
     console.log('Module system:', moduleSystem);
+  }
 
+  // -------------------------
+  // Database
+  // -------------------------
+
+  const database = await select({
+    message: 'Select database setup:',
+    choices: [
+      {
+        name: 'Sequelize ORM',
+        value: 'sequelize',
+      },
+      {
+        name: 'PostgreSQL',
+        value: 'postgres',
+      },
+      {
+        name: 'No Database',
+        value: 'none',
+      },
+    ],
+  });
+
+  console.log('Database:', database);
+
+  // -------------------------
+  // Template
+  // -------------------------
+
+  let templatePath;
+
+  if (language === 'javascript') {
     templatePath = path.join(
       __dirname,
       '..',
@@ -85,19 +125,41 @@ async function main() {
       moduleSystem,
     );
   } else {
-    templatePath = path.join(__dirname, '..', 'templates', language);
+    templatePath = path.join(__dirname, '..', 'templates', 'typescript');
   }
+
+  // -------------------------
+  // Project Path
+  // -------------------------
 
   const projectPath = path.resolve(process.cwd(), projectName);
 
   if (fs.existsSync(projectPath)) {
     console.error(`\n✖ Directory already exists: ${projectPath}`);
+
     process.exit(1);
   }
 
   fs.mkdirSync(projectPath);
 
+  // -------------------------
+  // Copy Template
+  // -------------------------
   copyDirectory(templatePath, projectPath, projectName);
+
+  if (database !== 'none') {
+    const databaseTemplatePath = path.join(
+      __dirname,
+      '..',
+      'templates',
+      'database',
+      database,
+    );
+  }
+  copyDirectory(databaseTemplatePath, projectPath, projectName);
+  // -------------------------
+  // Install Dependencies
+  // -------------------------
 
   console.log('\nInstalling dependencies...\n');
 
@@ -106,11 +168,16 @@ async function main() {
     stdio: 'inherit',
   });
 
+  // -------------------------
+  // Success
+  // -------------------------
+
   console.log(`
 ✔ Project created successfully!
 
   Project: ${projectName}
   Language: ${language}${language === 'javascript' ? `\n  Module system: ${moduleSystem}` : ''}
+  Database: ${database}
 
 Next steps:
 
