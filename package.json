@@ -1,17 +1,63 @@
 {
   "name": "@jain_daksh/nodecli",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "A CLI tool for scaffolding Node.js backend projects with JavaScript or TypeScript and a clean, predefined folder structure.",
   "main": "index.js",
   "bin": {
     "nodeforge": "bin/cli.js"
   },
+  "files": [
+    "bin",
+    "templates",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
+    "start": "node bin/cli.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "nodejs",
+    "node",
+    "cli",
+    "node-cli",
+    "nodejs-cli",
+    "npm",
+    "npm-package",
+    "backend",
+    "backend-cli",
+    "backend-generator",
+    "project-generator",
+    "project-scaffolding",
+    "scaffolding",
+    "boilerplate",
+    "backend-boilerplate",
+    "nodejs-boilerplate",
+    "express",
+    "expressjs",
+    "javascript",
+    "typescript",
+    "typescript-cli",
+    "code-generator",
+    "developer-tools"
+  ],
+  "author": {
+    "name": "Daksh Jain",
+    "url": "https://github.com/jain-daksh"
+  },
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jain-daksh/nodecli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jain-daksh/nodecli/issues"
+  },
+  "homepage": "https://github.com/jain-daksh/nodecli#readme",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "@inquirer/prompts": "^8.5.2",
     "express": "^5.2.1"
